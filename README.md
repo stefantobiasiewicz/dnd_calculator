@@ -6,7 +6,7 @@ Cennik jest zahardkodowany — aplikacja nie potrzebuje backendu.
 
 ## Uruchomienie
 
-Wymaga Node.js 18+.
+Wymaga Node.js 20+.
 
 ```bash
 npm install
