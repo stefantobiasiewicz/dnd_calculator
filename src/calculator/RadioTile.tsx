@@ -20,18 +20,16 @@ export function RadioTile({
   disabled?: boolean;
 }) {
   return (
-    <div className="relative">
+    <div className="radio-tile">
       <button
         type="button"
         onClick={onClick}
         disabled={disabled}
-        className={`grid min-h-[112px] w-full content-start gap-2 rounded-card border p-4 pr-8 text-left transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
-          selected ? 'border-brand bg-brand-light ring-2 ring-brand/15' : 'border-line bg-field hover:border-brand'
-        }`}
+        className={`radio-tile__button ${selected ? 'radio-tile__button--selected' : ''}`}
       >
-        <span className="grid h-9 w-11 place-items-end text-ink">{icon}</span>
-        <strong className="text-sm">{title}</strong>
-        {subtitle && <span className="text-xs text-muted">{subtitle}</span>}
+        <span className="radio-tile__icon">{icon}</span>
+        <strong className="radio-tile__title">{title}</strong>
+        {subtitle && <span className="radio-tile__subtitle">{subtitle}</span>}
       </button>
       <InfoButton label={title} description={infoDescription} />
     </div>

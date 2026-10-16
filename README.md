@@ -29,4 +29,4 @@ z backoffice, więc nowszy config można wkleić bez przeróbek.
 
 ## Stack
 
-Vite, React 18, TypeScript, Tailwind CSS.
+Vite, React 18, TypeScript, Less.

@@ -14,15 +14,15 @@ export function InfoButton({ label, description }: { label: string; description:
           e.stopPropagation();
           setOpen(true);
         }}
-        className="absolute right-2 top-2 grid h-6 w-6 place-items-center rounded-full text-muted hover:bg-soft hover:text-brand-dark"
+        className="info-button"
         aria-label={`Informacje: ${label}`}
       >
         <InfoIcon />
       </button>
       <Modal open={open} title={label} onClose={() => setOpen(false)}>
-        <div className="grid gap-3">
+        <div className="info-modal">
           <MockPhoto label={label} />
-          <p className="text-sm text-muted">{description}</p>
+          <p className="info-modal__description">{description}</p>
         </div>
       </Modal>
     </>

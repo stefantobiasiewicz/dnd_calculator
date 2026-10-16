@@ -13,17 +13,8 @@ export function ModelPreview({ config }: { config: CalculatorConfig }) {
   const o = config.options;
 
   return (
-    <div
-      className="grid place-items-center overflow-hidden rounded-card border border-line"
-      style={{
-        minHeight: 260,
-        backgroundImage:
-          'linear-gradient(transparent 24px, rgba(24,32,31,0.05) 25px), linear-gradient(90deg, transparent 24px, rgba(24,32,31,0.05) 25px)',
-        backgroundSize: '25px 25px',
-        backgroundColor: '#eef3f0',
-      }}
-    >
-      <svg viewBox="0 0 240 200" className="w-[75%] max-w-[260px]">
+    <div className="model-preview">
+      <svg viewBox="0 0 240 200" className="model-preview__image">
         {/* podłoga / płyta */}
         <polygon points="40,150 120,180 200,150 120,120" fill="#e6ece9" stroke={WALL} strokeWidth="2" />
 

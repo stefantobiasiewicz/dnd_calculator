@@ -24,25 +24,25 @@ export function Modal({ open, title, onClose, children, footer, wide, size }: Mo
   if (!open) return null;
   return createPortal(
     <div
-      className="fixed inset-0 z-50 grid place-items-center bg-ink/40 p-4"
+      className="modal-backdrop"
       onClick={onClose}
       role="presentation"
     >
       <div
-        className={`card grid w-full max-h-[90vh] ${size === 'xl' ? 'max-w-4xl' : wide ? 'max-w-2xl' : 'max-w-md'} grid-rows-[auto_1fr_auto] shadow-panel`}
+        className={`card modal ${size === 'xl' ? 'modal--xl' : wide ? 'modal--wide' : ''}`}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
         aria-label={title}
       >
-        <div className="flex items-center justify-between border-b border-line px-5 py-4">
-          <h3 className="text-lg font-semibold">{title}</h3>
-          <button type="button" className="text-muted hover:text-ink" onClick={onClose} aria-label="Zamknij">
+        <div className="modal__header">
+          <h3 className="modal__title">{title}</h3>
+          <button type="button" className="modal__close" onClick={onClose} aria-label="Zamknij">
             ✕
           </button>
         </div>
-        <div className="overflow-y-auto px-5 py-4">{children}</div>
-        {footer && <div className="flex justify-end gap-2 border-t border-line px-5 py-4">{footer}</div>}
+        <div className="modal__body">{children}</div>
+        {footer && <div className="modal__footer">{footer}</div>}
       </div>
     </div>,
     document.body,

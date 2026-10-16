@@ -107,11 +107,11 @@ export function Calculator({
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
-      <div className="grid gap-6">
-        <section className="card shadow-panel">
+    <div className="calculator">
+      <div className="calculator__form">
+        <section className="card section-card">
           <SectionHead title="Typ budynku" hint="Wybierz wariant najbliższy projektowi z dokumentacji." />
-          <div className="grid gap-3 p-5 pt-3 sm:grid-cols-2">
+          <div className="section-card__body section-card__body--tiles">
             {FAMILIES.map((family) => (
               <RadioTile
                 key={family}
@@ -126,36 +126,36 @@ export function Calculator({
           </div>
         </section>
 
-        <section className="card shadow-panel">
+        <section className="card section-card">
           <SectionHead title="Parametry modelu" hint="Standardowa oferta obejmuje budynki do 25 × 25 m." />
-          <div className="grid gap-5 p-5 pt-3">
+          <div className="section-card__body section-card__body--fields">
             <div>
               <label className="label">Powierzchnia budynku</label>
-              <div className="grid grid-cols-[1fr_80px] items-center gap-3">
+              <div className="area-field">
                 <input
                   type="range"
                   min={30}
                   max={400}
                   value={config.areaSqm}
                   onChange={(e) => patch({ areaSqm: Number(e.target.value) })}
-                  className="accent-brand"
+                  className="area-field__range"
                 />
                 <input
                   type="number"
                   min={1}
-                  className="input min-h-[40px]"
+                  className="input input--compact"
                   value={config.areaSqm}
                   onChange={(e) => patch({ areaSqm: Number(e.target.value) })}
                 />
               </div>
-              <p className="hint mt-1.5">
+              <p className="hint field-hint">
                 {config.areaSqm} m² {areaSqmLabel(config.buildingType)}
               </p>
             </div>
 
             <div>
               <label className="label">{levelsFieldLabel(config.buildingType)}</label>
-              <div className="grid grid-cols-2 gap-3 sm:max-w-xs">
+              <div className="level-grid">
                 {([1, 2] as const).map((n) => (
                   <RadioTile
                     key={n}
@@ -180,7 +180,7 @@ export function Calculator({
             {showRoof && (
               <div>
                 <label className="label">Rodzaj dachu</label>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                <div className="roof-grid">
                   {ROOFS.map((r) => (
                     <RadioTile
                       key={r}
@@ -209,19 +209,19 @@ export function Calculator({
                 value={config.copies}
                 onChange={(e) => patch({ copies: Math.max(1, Number(e.target.value) || 1) })}
               />
-              <p className="hint mt-1.5">Kolejne egzemplarze z obniżonym kosztem produkcji.</p>
+              <p className="hint field-hint">Kolejne egzemplarze z obniżonym kosztem produkcji.</p>
             </div>
           </div>
         </section>
 
-        <section className="card shadow-panel">
+        <section className="card section-card">
           <SectionHead title="Elementy modelu" hint="Dodatki drukowane są w kontrastowym kolorze." />
-          <div className="grid gap-5 p-5 pt-3">
+          <div className="section-card__body section-card__body--fields">
             <div>
               <label className="label">Rozszerzenia</label>
-              <div className="flex flex-wrap gap-2">
+              <div className="options-list">
                 {visibleOptionKeys.map((key) => (
-                  <div key={key} className="relative">
+                  <div key={key} className="option-item">
                     <Toggle active={config.options[OPTION_TO_CONFIG[key]]} onClick={() => toggleOption(key)}>
                       {OPTION_LABEL[key]} +{pricing.optionPrices[key]} zł
                     </Toggle>
@@ -234,12 +234,12 @@ export function Calculator({
         </section>
       </div>
 
-      <aside className="grid content-start gap-4 lg:sticky lg:top-6">
+      <aside className="calculator__summary">
         <ModelPreview config={config} />
 
-        <div className="card p-5">
-          <p className="text-xs text-muted">Szacunkowy przedział</p>
-          <p className="my-1 text-3xl font-extrabold">{formatPriceEstimate(estimate)}</p>
+        <div className="card price-card">
+          <p className="price-card__caption">Szacunkowy przedział</p>
+          <p className="price-card__value">{formatPriceEstimate(estimate)}</p>
           <p className="hint">
             {estimate.status === 'out_of_range'
               ? 'Ten rozmiar wykracza poza standardowy zakres cennika.'
@@ -257,9 +257,9 @@ export function Calculator({
 
 function SectionHead({ title, hint }: { title: string; hint: string }) {
   return (
-    <div className="p-5 pb-0">
-      <h2 className="text-lg font-semibold">{title}</h2>
-      <p className="hint mt-1">{hint}</p>
+    <div className="section-head">
+      <h2 className="section-head__title">{title}</h2>
+      <p className="hint section-head__hint">{hint}</p>
     </div>
   );
 }
@@ -269,9 +269,7 @@ function Toggle({ active, onClick, children }: { active: boolean; onClick: () =>
     <button
       type="button"
       onClick={onClick}
-      className={`rounded-card border px-3 py-2 pr-8 text-sm transition-colors ${
-        active ? 'border-brand bg-brand-light text-brand-dark' : 'border-line bg-field text-ink hover:border-brand'
-      }`}
+      className={`toggle ${active ? 'toggle--active' : ''}`}
     >
       {children}
     </button>
